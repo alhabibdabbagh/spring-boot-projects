@@ -77,4 +77,8 @@ employeeRepository.deleteById(id);
     public List<?> getGroupWith() {
         return employeeRepository.getGroupWith();
     }
+
+    public List<Employee> findByAgeEquals(int age) {
+        return employeeRepository.findByAgeEquals(age);
+    }
 }

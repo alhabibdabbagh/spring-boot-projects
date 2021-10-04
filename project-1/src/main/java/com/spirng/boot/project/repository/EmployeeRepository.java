@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository  extends CrudRepository<Employee,Integer> {
+
+    List<Employee> findByAgeEquals(int age);
     @Query("select count(e) from Employee as e ")
     int getAllEmployeeCount ();
 

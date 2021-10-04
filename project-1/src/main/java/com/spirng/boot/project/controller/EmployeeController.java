@@ -75,4 +75,8 @@ public class EmployeeController {
     public List<?> getGroup1(){
         return employeeService.getGroupWith();
     }
+    @GetMapping("/employee/find/{age}")
+    public List<?> findByAgeEquals(@PathVariable int age){
+        return employeeService.findByAgeEquals(age);
+    }
 }
