@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/h2-project/h2-project.iml" filepath="$PROJECT_DIR$/h2-project/h2-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/project-1/project-1.iml" filepath="$PROJECT_DIR$/project-1/project-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project-3/project-3.iml" filepath="$PROJECT_DIR$/project-3/project-3.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-boot-projects.iml" filepath="$PROJECT_DIR$/spring-boot-projects.iml" />
     </modules>
   </component>
