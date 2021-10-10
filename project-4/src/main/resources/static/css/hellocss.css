@@ -1,0 +1,12 @@
+.hellocss {
+    font-size: x-large;
+    font-style: oblique;
+    color: cornflowerblue;
+}
+
+.startcss{
+    font-style: revert;
+    font-size: xx-large;
+    color: aqua;
+    font-family: 'DejaVu Sans Mono', monospace;
+}
