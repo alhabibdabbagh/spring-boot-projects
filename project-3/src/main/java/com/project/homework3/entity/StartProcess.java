@@ -3,7 +3,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
 import java.util.List;
 
 
@@ -23,4 +22,5 @@ public class StartProcess extends Measurements {
     private String baseUnit;
 
     public List<Measurements> measurements;
+    public List<String> availableTags;
 }

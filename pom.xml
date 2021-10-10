@@ -12,6 +12,7 @@
     <module> project-1</module>
         <module>h2-project</module>
         <module>project-3</module>
+        <module>project-4</module>
     </modules>
 
 
