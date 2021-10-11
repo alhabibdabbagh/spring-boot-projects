@@ -1,6 +1,7 @@
 package com.project6.demo.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder // bu initialize yaptıktan sonra bi ilk değer atama yapmak için kullanır initializerRunner'da
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
