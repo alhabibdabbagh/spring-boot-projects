@@ -66,6 +66,13 @@ public class UserController {
         model.addAttribute("user",userRepository.findAll());
         return "index";
     }
+
+    /**
+     *
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping ("/delete/{id}")
     public String deleteUser( @PathVariable int id ,Model model){
        User user= userRepository.findById(id).orElseThrow(() ->new IllegalArgumentException("invalid user id : "+id));
