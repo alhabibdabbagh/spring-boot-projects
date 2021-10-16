@@ -21,24 +21,25 @@ public class CustomerServis {
 
    /* @Autowired*//* @Repository olduğu için  buna gerek kalmadı */
     private final CustomerDAO customerDAO;
-   // private final CustomerMapper customerMapper;
+    private final CustomerMapper customerMapper;
 
     public Customer getCustomer(){
         return null;
     }
 
-    public Optional<Customer> saveCustomer(CustomerDTO customer) throws RuntimeException {
+    public Optional<Customer> saveCustomer(CustomerDTO customerDTO) throws RuntimeException {
 
-        if(customerDAO.isExitSsid(customer.getSsid())){
-            throw new SameCustomerException(" customer with ssid " + customer.getSsid()+" is already existed??");
+        if(customerDAO.isExitSsid(customerDTO.getSsid())){
+            throw new SameCustomerException(" customerDTO with ssid " + customerDTO.getSsid()+" is already existed??");
         }
-        Customer customer1=new Customer();
-   /*     customer1.setId*/
+/*        Customer customer1=new Customer();
+   *//*     customer1.setId*//*
         customer1.setId(customer1.getSsid());
-        customer1.setEmail(customer.getEmail());
-        customer1.setFirstName(customer.getFirstName());
-        customer1.setLastName(customer.getLastName());
-        customer1.setSsid(customer.getSsid());
+        customer1.setEmail(customerDTO.getEmail());
+        customer1.setFirstName(customerDTO.getFirstName());
+        customer1.setLastName(customerDTO.getLastName());
+        customer1.setSsid(customerDTO.getSsid());*/
+        Customer customer1=customerMapper.mapFromCustomerDTOToCustomer(customerDTO);
 
         return Optional.ofNullable(customerDAO.save(customer1));
     }

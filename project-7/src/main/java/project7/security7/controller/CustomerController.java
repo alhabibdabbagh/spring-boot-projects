@@ -26,8 +26,8 @@ public class CustomerController {
     private CustomerServis customerServis;
 
     @PostMapping("/save-customer")
-    public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid CustomerDTO customer){
-      Optional<Customer> optionalCustomer= customerServis.saveCustomer(customer);
+    public ResponseEntity<Customer> saveCustomer(@RequestBody @Valid CustomerDTO customerDTO){
+      Optional<Customer> optionalCustomer= customerServis.saveCustomer(customerDTO);
       if(optionalCustomer.isPresent()){
           return new ResponseEntity<>(optionalCustomer.get(), HttpStatus.OK);
       }
