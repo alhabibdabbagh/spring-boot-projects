@@ -1,13 +1,13 @@
 package project7.security7.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Habib
@@ -23,6 +23,10 @@ public class Customer extends AbstractIdBase {
     private String lastName;
     private long ssid;
     private String email;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "customer")
+   private List<Wallet> walletList=new ArrayList<>();
 
 
 }
