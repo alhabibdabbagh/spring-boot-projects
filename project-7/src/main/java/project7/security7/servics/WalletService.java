@@ -9,6 +9,7 @@ import project7.security7.entity.Customer;
 import project7.security7.entity.Wallet;
 import project7.security7.enumuration.Currency;
 import project7.security7.exceptions.BadRequestException;
+import project7.security7.exceptions.isAlreadyHasWallet;
 import project7.security7.mapper.WalletMapper;
 import project7.security7.repository.CustomerDAO;
 import project7.security7.repository.WalletRepository;
@@ -52,6 +53,9 @@ public class WalletService {
     }
 
     private void vaildateForSameCustomerWithDiffrentCurrnecy(long customerId, Currency currency) {
+        if(walletRepository.isExitCurrencyForSameCustomer(currency,customerId)){
+            throw  new isAlreadyHasWallet(ErrorMassageConstants.EXIT_WALLET);
+        }
 
     }
 
