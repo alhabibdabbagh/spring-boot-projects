@@ -17,8 +17,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WalletDTO {
-
+    @ApiModelProperty(example =" TRY or USD or EUR")
     private Currency currency;
+
+    @ApiModelProperty(example = "0.0")
     private  double balance;
     @ApiModelProperty(hidden = true)
    private long ssid;

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import project7.security7.enumuration.Currency;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ import java.time.LocalDate;
 @Entity
 public class Wallet extends AbstractIdBase {
 
-
+    @Enumerated(EnumType.STRING) // string olarak kayiddecek DB 'de
     private Currency currency;
     private  double balance;
     private LocalDate createDate;

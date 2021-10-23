@@ -7,9 +7,13 @@ import org.springframework.stereotype.Service;
 import project7.security7.dto.WalletDTO;
 import project7.security7.entity.Customer;
 import project7.security7.entity.Wallet;
+import project7.security7.enumuration.Currency;
+import project7.security7.exceptions.BadRequestException;
 import project7.security7.mapper.WalletMapper;
 import project7.security7.repository.CustomerDAO;
 import project7.security7.repository.WalletRepository;
+import project7.security7.util.ErrorMassageConstants;
+import project7.security7.util.VaildateWallet;
 
 import java.util.Optional;
 
@@ -21,22 +25,39 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WalletService {
 
-    private  WalletRepository walletRepository;
     @Autowired
-    private  WalletMapper walletMapper;
+    private WalletRepository walletRepository;
+    @Autowired
+    private WalletMapper walletMapper;
+    @Autowired
+    private CustomerDAO customerDAO;
 
-    private  CustomerDAO customerDAO;
-
-    public Customer findCustomerById(long id){
-        if(customerDAO.findById(id).isPresent()){
+    public Customer findCustomerById(long id) {
+/*        if(customerDAO.findById(id).isPresent()){
             return customerDAO.findById(id).get();
         }
-        throw new RuntimeException("we cann't find the customer with this ID : "+ id);
+        throw new RuntimeException("we cann't find the customer with this ID : "+ id);*/ // ikinci yazma şekli
+        return customerDAO.findById(id).orElseThrow(() -> new RuntimeException(String.format("we cann't find the customer with this ID %d", id)));
     }
+
     public Optional<Wallet> saveWallet(WalletDTO walletDTO) {
+        this.vaildateForBalance(walletDTO.getBalance());
+        this.vaildateForSameCustomerWithDiffrentCurrnecy(walletDTO.getCustomerId(),walletDTO.getCurrency());
+
+
         //mapping
         Wallet wallet = walletMapper.fromWalletDTOToWallet(walletDTO);
 
         return Optional.ofNullable(walletRepository.save(wallet));
+    }
+
+    private void vaildateForSameCustomerWithDiffrentCurrnecy(long customerId, Currency currency) {
+
+    }
+
+    private void vaildateForBalance(double balance) {
+        if(!VaildateWallet.validateBalance(balance)){
+            throw  new BadRequestException(ErrorMassageConstants.BALANCE_IS_MINUS);
+        }
     }
 }
