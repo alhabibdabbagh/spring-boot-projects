@@ -4,9 +4,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.NumberFormat;
 import project7.security7.entity.Customer;
 import project7.security7.enumuration.Currency;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -17,13 +20,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WalletDTO {
-    @ApiModelProperty(example =" TRY or USD or EUR")
+    @ApiModelProperty(example = " TRY or USD or EUR")
+    @NotBlank(message = "currency is mandatory")
     private Currency currency;
 
+    @NotNull(message = "balance is mandatory")
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     @ApiModelProperty(example = "0.0")
-    private  double balance;
+    private double balance;
+
     @ApiModelProperty(hidden = true)
-   private long ssid;
-/*    private LocalDate createDate;*/
+    private long ssid;
+    /*    private LocalDate createDate;*/
+    @NotNull(message = "customerID is mandatory")
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
     private long customerId;
 }
