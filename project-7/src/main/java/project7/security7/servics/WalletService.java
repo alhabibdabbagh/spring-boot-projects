@@ -64,4 +64,8 @@ public class WalletService {
             throw  new BadRequestException(ErrorMassageConstants.BALANCE_IS_MINUS);
         }
     }
+
+    public Optional<Wallet> deposit(long customerId, String currency, double amount) {
+return null;
+    }
 }
