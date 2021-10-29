@@ -13,7 +13,6 @@ public class VaildateWallet {
             return true;
         }
         return false;
-
-
     }
+
 }

@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
         WalletAppErrorResponse walletAppErrorResponse = prepareErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
         return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler({NoEnoughBalanceForWithdrawException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<WalletAppErrorResponse> handleException(NoEnoughBalanceForWithdrawException e) {
+        WalletAppErrorResponse walletAppErrorResponse = prepareErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.BAD_REQUEST);
+    }
     private WalletAppErrorResponse prepareErrorResponse(HttpStatus httpStatus, String massage) {
         WalletAppErrorResponse walletAppErrorResponse = new WalletAppErrorResponse();
         walletAppErrorResponse.setMassage(massage);

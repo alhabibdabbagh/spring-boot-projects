@@ -41,5 +41,15 @@ public class WalletController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @PutMapping("/mins/{customerId}/{currency}/{mins}")
+    public ResponseEntity<Wallet> depositToWalletMins(@PathVariable long customerId
+            , @PathVariable("currency") String currency
+            , @PathVariable double mins){
+        Optional <Wallet> optionalWallet= walletService.depositMins(customerId,currency,mins);
+        if(optionalWallet.isPresent()){
+            return new ResponseEntity<>(optionalWallet.get() , HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
 }

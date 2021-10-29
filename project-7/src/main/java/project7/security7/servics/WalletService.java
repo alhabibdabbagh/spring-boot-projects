@@ -10,6 +10,7 @@ import project7.security7.entity.Customer;
 import project7.security7.entity.Wallet;
 import project7.security7.enumuration.Currency;
 import project7.security7.exceptions.BadRequestException;
+import project7.security7.exceptions.NoEnoughBalanceForWithdrawException;
 import project7.security7.exceptions.NotFoundCurrnecyForCustomer;
 import project7.security7.exceptions.isAlreadyHasWallet;
 import project7.security7.mapper.WalletMapper;
@@ -36,21 +37,18 @@ public class WalletService {
     private CustomerDAO customerDAO;
 
     public Customer findCustomerById(long id) {
-        if(customerDAO.findById(id).isPresent()){
+        if (customerDAO.findById(id).isPresent()) {
             return customerDAO.findById(id).get();
         }
-        throw new RuntimeException("we cann't find the customer with this ID : "+ id); // ikinci yazma şekli
-      //  return customerDAO.findById(id).orElseThrow(() -> new RuntimeException(String.format("we cann't find the customer with this ID %d", id)));
+        throw new RuntimeException("we cann't find the customer with this ID : " + id); // ikinci yazma şekli
+        //  return customerDAO.findById(id).orElseThrow(() -> new RuntimeException(String.format("we cann't find the customer with this ID %d", id)));
     }
 
     public Optional<Wallet> saveWallet(WalletDTO walletDTO) {
         this.vaildateForBalance(walletDTO.getBalance());
         this.vaildateForSameCustomerWithDiffrentCurrnecy(walletDTO.getCustomerId(), walletDTO.getCurrency());
-
-
         //mapping
         Wallet wallet = walletMapper.fromWalletDTOToWallet(walletDTO);
-
         return Optional.ofNullable(walletRepository.save(wallet));
     }
 
@@ -58,7 +56,6 @@ public class WalletService {
         if (walletRepository.isExitCurrencyForSameCustomer(currency, customerId)) {
             throw new isAlreadyHasWallet(ErrorMassageConstants.EXIT_WALLET);
         }
-
     }
 
     private void vaildateForBalance(double balance) {
@@ -68,20 +65,37 @@ public class WalletService {
     }
 
     public Optional<Wallet> deposit(long customerId, String currency, double amount) {
-        Customer customer = findCustomerById(customerId);
-
-        Optional<Wallet> optionalWallet = customer.getWalletList()
-                .stream()
-                .filter(wallet -> wallet.getCurrency().toString().equals(String.valueOf(currency)))
-                .findFirst();
-        if (!optionalWallet.isPresent()) {
+        Optional<Wallet> optionalWallet = getWallet(customerId, currency);
+/*        if (!optionalWallet.isPresent()) {
             throw new NotFoundCurrnecyForCustomer(ErrorMassageConstants.NOT_FOUND_CURRENCY_FOR_CUSTOMER);
 
-        }
+        }*/
         optionalWallet.get().setBalance(optionalWallet.get().getBalance() + amount);
         walletRepository.save(optionalWallet.get());
-
-
         return optionalWallet;
     }
+
+    private Optional<Wallet> getWallet(long customerId, String currency)  throws NotFoundCurrnecyForCustomer {
+        Customer customer = findCustomerById(customerId);
+        Optional<Wallet> optionalWallet = customer.getWalletList()
+                .stream()
+                .filter(wallet -> wallet.getCurrency().equals(Currency.valueOf(currency)))
+                .findFirst();
+        if(optionalWallet.isPresent()){
+            return optionalWallet;
+        }
+        throw new NotFoundCurrnecyForCustomer(ErrorMassageConstants.NOT_FOUND_CURRENCY_FOR_CUSTOMER);
+    }
+
+    public Optional<Wallet> depositMins(long customerId, String currency, double mins) {
+        Optional<Wallet> optionalWallet = getWallet(customerId, currency);
+        if (!optionalWallet.isPresent() || optionalWallet.get().getBalance() < mins) {
+            throw new NoEnoughBalanceForWithdrawException(ErrorMassageConstants.NO_ENOUGH_BALANCE);
+
+        }
+        optionalWallet.get().setBalance(optionalWallet.get().getBalance() - mins);
+        walletRepository.save(optionalWallet.get());
+        return optionalWallet;
+    }
+
 }
