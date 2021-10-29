@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import project7.security7.dto.WalletDTO;
 import project7.security7.entity.Customer;
 import project7.security7.entity.Wallet;
 import project7.security7.enumuration.Currency;
 import project7.security7.exceptions.BadRequestException;
+import project7.security7.exceptions.NotFoundCurrnecyForCustomer;
 import project7.security7.exceptions.isAlreadyHasWallet;
 import project7.security7.mapper.WalletMapper;
 import project7.security7.repository.CustomerDAO;
@@ -34,16 +36,16 @@ public class WalletService {
     private CustomerDAO customerDAO;
 
     public Customer findCustomerById(long id) {
-/*        if(customerDAO.findById(id).isPresent()){
+        if(customerDAO.findById(id).isPresent()){
             return customerDAO.findById(id).get();
         }
-        throw new RuntimeException("we cann't find the customer with this ID : "+ id);*/ // ikinci yazma şekli
-        return customerDAO.findById(id).orElseThrow(() -> new RuntimeException(String.format("we cann't find the customer with this ID %d", id)));
+        throw new RuntimeException("we cann't find the customer with this ID : "+ id); // ikinci yazma şekli
+      //  return customerDAO.findById(id).orElseThrow(() -> new RuntimeException(String.format("we cann't find the customer with this ID %d", id)));
     }
 
     public Optional<Wallet> saveWallet(WalletDTO walletDTO) {
         this.vaildateForBalance(walletDTO.getBalance());
-        this.vaildateForSameCustomerWithDiffrentCurrnecy(walletDTO.getCustomerId(),walletDTO.getCurrency());
+        this.vaildateForSameCustomerWithDiffrentCurrnecy(walletDTO.getCustomerId(), walletDTO.getCurrency());
 
 
         //mapping
@@ -53,19 +55,33 @@ public class WalletService {
     }
 
     private void vaildateForSameCustomerWithDiffrentCurrnecy(long customerId, Currency currency) {
-        if(walletRepository.isExitCurrencyForSameCustomer(currency,customerId)){
-            throw  new isAlreadyHasWallet(ErrorMassageConstants.EXIT_WALLET);
+        if (walletRepository.isExitCurrencyForSameCustomer(currency, customerId)) {
+            throw new isAlreadyHasWallet(ErrorMassageConstants.EXIT_WALLET);
         }
 
     }
 
     private void vaildateForBalance(double balance) {
-        if(!VaildateWallet.validateBalance(balance)){
-            throw  new BadRequestException(ErrorMassageConstants.BALANCE_IS_MINUS);
+        if (!VaildateWallet.validateBalance(balance)) {
+            throw new BadRequestException(ErrorMassageConstants.BALANCE_IS_MINUS);
         }
     }
 
     public Optional<Wallet> deposit(long customerId, String currency, double amount) {
-return null;
+        Customer customer = findCustomerById(customerId);
+
+        Optional<Wallet> optionalWallet = customer.getWalletList()
+                .stream()
+                .filter(wallet -> wallet.getCurrency().toString().equals(String.valueOf(currency)))
+                .findFirst();
+        if (!optionalWallet.isPresent()) {
+            throw new NotFoundCurrnecyForCustomer(ErrorMassageConstants.NOT_FOUND_CURRENCY_FOR_CUSTOMER);
+
+        }
+        optionalWallet.get().setBalance(optionalWallet.get().getBalance() + amount);
+        walletRepository.save(optionalWallet.get());
+
+
+        return optionalWallet;
     }
 }

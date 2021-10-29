@@ -35,7 +35,12 @@ public class GlobalExceptionHandler {
         WalletAppErrorResponse walletAppErrorResponse = prepareErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
         return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.NOT_FOUND);
     }
-
+    @ExceptionHandler({NotFoundCurrnecyForCustomer.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<WalletAppErrorResponse> handleException(NotFoundCurrnecyForCustomer e) {
+        WalletAppErrorResponse walletAppErrorResponse = prepareErrorResponse(HttpStatus.NOT_FOUND, e.getMessage());
+        return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.NOT_FOUND);
+    }
     private WalletAppErrorResponse prepareErrorResponse(HttpStatus httpStatus, String massage) {
         WalletAppErrorResponse walletAppErrorResponse = new WalletAppErrorResponse();
         walletAppErrorResponse.setMassage(massage);

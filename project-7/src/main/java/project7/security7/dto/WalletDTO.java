@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class WalletDTO {
     @ApiModelProperty(example = " TRY or USD or EUR")
-    @NotBlank(message = "currency is mandatory")
+    @NotNull(message = "currency is mandatory")
     private Currency currency;
 
     @NotNull(message = "balance is mandatory")
