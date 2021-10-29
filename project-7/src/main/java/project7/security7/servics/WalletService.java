@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import project7.security7.dto.WalletDTO;
 import project7.security7.entity.Customer;
@@ -63,7 +64,7 @@ public class WalletService {
             throw new BadRequestException(ErrorMassageConstants.BALANCE_IS_MINUS);
         }
     }
-
+@Transactional
     public Optional<Wallet> deposit(long customerId, String currency, double amount) {
         Optional<Wallet> optionalWallet = getWallet(customerId, currency);
 /*        if (!optionalWallet.isPresent()) {
@@ -86,13 +87,13 @@ public class WalletService {
         }
         throw new NotFoundCurrnecyForCustomer(ErrorMassageConstants.NOT_FOUND_CURRENCY_FOR_CUSTOMER);
     }
-
+    @Transactional
     public Optional<Wallet> depositMins(long customerId, String currency, double mins) {
         Optional<Wallet> optionalWallet = getWallet(customerId, currency);
-        if (!optionalWallet.isPresent() || optionalWallet.get().getBalance() < mins) {
+       /* if (!optionalWallet.isPresent() || optionalWallet.get().getBalance() < mins) {
             throw new NoEnoughBalanceForWithdrawException(ErrorMassageConstants.NO_ENOUGH_BALANCE);
 
-        }
+        }*/
         optionalWallet.get().setBalance(optionalWallet.get().getBalance() - mins);
         walletRepository.save(optionalWallet.get());
         return optionalWallet;
