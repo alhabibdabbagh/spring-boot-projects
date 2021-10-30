@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project7.security7.dto.CustomerDTO;
 import project7.security7.entity.Customer;
+import project7.security7.exceptions.NotFoundCurrnecyForCustomer;
+import project7.security7.exceptions.NotFoundCustomer;
 import project7.security7.exceptions.SameCustomerException;
 import project7.security7.mapper.CustomerMapper;
 import project7.security7.repository.CustomerDAO;
+import project7.security7.util.ErrorMassageConstants;
 
 import java.util.Optional;
 
@@ -23,8 +26,9 @@ public class CustomerServis {
     private final CustomerDAO customerDAO;
     private final CustomerMapper customerMapper;
 
-    public Customer getCustomer(){
-        return null;
+    public Customer getCustomerById(long Id){
+       return customerDAO.findById(Id).orElseThrow(() -> new NotFoundCustomer(ErrorMassageConstants.NOT_FOUND_CUSTOMER));
+
     }
 
     public Optional<Customer> saveCustomer(CustomerDTO customerDTO) throws RuntimeException {
@@ -42,5 +46,22 @@ public class CustomerServis {
         Customer customer1=customerMapper.mapFromCustomerDTOToCustomer(customerDTO);
 
         return Optional.ofNullable(customerDAO.save(customer1));
+    }
+
+    public Optional<Customer> updateCustomer(CustomerDTO customerDTO) {
+        Optional<Customer> customer= customerDAO.findById(customerDTO.getSsid());
+     //   Customer customer1=new Customer();
+        customer.get().setId(customerDTO.getId());
+        customer.get().setEmail(customerDTO.getEmail());
+        customer.get().setFirstName(customerDTO.getFirstName());
+        customer.get().setLastName(customerDTO.getLastName());
+        customer.get().setSsid(customerDTO.getSsid());
+     //  Customer customer1= customerMapper.mapFromCustomerDTOToCustomer(customerDTO);
+       return Optional.ofNullable(customerDAO.save(customer.get()));
+    }
+
+    public void deleteById(long customerId) {
+       Customer customer=getCustomerById((long)customerId);
+        customerDAO.deleteById((long)customerId);
     }
 }
