@@ -37,6 +37,7 @@ public class CustomerController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
+
     @GetMapping("/customer")
     public ResponseEntity<Customer> getCustomerWithId(@RequestParam long id){
        Customer customer= customerServis.getCustomerById((long)id);
