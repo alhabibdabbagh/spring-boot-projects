@@ -23,12 +23,12 @@ public abstract class AbstractIdBase {
     private long id;
 
     @CreatedDate
-    @Column(name = "created_date")
+/*    @Column(name = "created_date")*/
     @JsonIgnore// mappleme olmasın diye çünkü otomatik generated olacak
-    private Instant createdTime;
+    private Instant createdTime =Instant.now();
 
     @LastModifiedDate
-    @Column(name = "modified_date")
+ /*   @Column(name = "modified_date")*/
     @JsonIgnore
-    private Instant modifiedDate;
+    private Instant modifiedDate =Instant.now();
 }
