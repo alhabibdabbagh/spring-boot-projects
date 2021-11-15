@@ -22,6 +22,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler({ParseTimeException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<WalletAppErrorResponse> handleException(ParseTimeException e) {
+        WalletAppErrorResponse walletAppErrorResponse = prepareErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        return new ResponseEntity<>(walletAppErrorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler({isAlreadyHasWallet.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<WalletAppErrorResponse> handleException(isAlreadyHasWallet e) {
