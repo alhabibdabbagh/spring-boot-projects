@@ -10,4 +10,5 @@ public class ErrorMassageConstants {
     public static  final String NOT_FOUND_CURRENCY_FOR_CUSTOMER="NOT FOUND CURRENCY WALLET FOR THİS CUSTOMER";
     public static  final String NO_ENOUGH_BALANCE="No Enough Balance For this customer";
     public static  final String NOT_FOUND_CUSTOMER="Not Found Customer";
+    public static  final String DATE_FORMAT_WRONG="Datem Format Not Correct";
 }
