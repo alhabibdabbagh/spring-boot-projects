@@ -128,10 +128,10 @@ public class WalletService {
     @Transactional
     public Optional<Wallet> Withdraw(long customerId, String currency, double mins) {
         Optional<Wallet> optionalWallet = getWallet(customerId, currency);
-       /* if (!optionalWallet.isPresent() || optionalWallet.get().getBalance() < mins) {
-            throw new NoEnoughBalanceForWithdrawException(ErrorMassageConstants.NO_ENOUGH_BAL  ANCE);
+        if (!optionalWallet.isPresent() || optionalWallet.get().getBalance() < mins) {
+            throw new NoEnoughBalanceForWithdrawException(ErrorMassageConstants.NO_ENOUGH_BALANCE);
 
-        }*/
+        }
         optionalWallet.get().setBalance(optionalWallet.get().getBalance() - mins);
         walletRepository.save(optionalWallet.get());
         this.saveTranscationToDatabase(optionalWallet.get(), mins, TranscationType.WITHDRAW);
