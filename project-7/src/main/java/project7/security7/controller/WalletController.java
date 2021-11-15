@@ -59,8 +59,12 @@ public class WalletController {
       @GetMapping("/get-transacton/by-date")
     public ResponseEntity <Page<List<WalletServiceTranscationLogger>>> getAllTranscation(
               @ApiParam(value = "transcation query for wallet usage",example = "05/07/2021",required = true)
-            @RequestParam String transactionDate, @PageableDefault(page = 0,size = 10)Pageable pageable){
-        return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable),HttpStatus.OK);
+            @RequestParam String transactionDate, @PageableDefault(page = 0,size = 10)Pageable pageable,
+              @RequestParam(required = false) Integer pageSize,
+              @RequestParam(required = false) Integer pageNumber){
+       if( Optional.ofNullable(pageNumber).isPresent() && Optional.ofNullable(pageSize).isPresent() )
+        return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable,pageSize,pageNumber),HttpStatus.OK);
+          return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable,null,null),HttpStatus.OK);
       }
 
 }

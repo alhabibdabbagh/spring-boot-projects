@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,11 +139,17 @@ public class WalletService {
         return optionalWallet;
     }
 
-    public Page<List<WalletServiceTranscationLogger>> getAllTransactionsWithDate(String transactionDate, Pageable pageable) {
+    public Page<List<WalletServiceTranscationLogger>> getAllTransactionsWithDate(String transactionDate, Pageable pageable,Integer size,Integer page) {
          DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern("d/MM/yyyy");
     VaildateWallet.vaildateTransactionDate(transactionDate,dateTimeFormatter);
 
        LocalDate dataTranscationResult= LocalDate.parse(transactionDate,dateTimeFormatter);
+       if(size ==null && page ==null){
+           pageable= PageRequest.of(0,10);
+       }else {
+           pageable= PageRequest.of(page,size);
+       }
+
 
         return this.transcationLoggerRepository.findTreanscationAboutDate(dataTranscationResult,pageable);
     }
