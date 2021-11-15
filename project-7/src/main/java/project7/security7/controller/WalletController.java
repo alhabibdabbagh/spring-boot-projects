@@ -62,9 +62,9 @@ public class WalletController {
             @RequestParam String transactionDate, @PageableDefault(page = 0,size = 10)Pageable pageable,
               @RequestParam(required = false) Integer pageSize,
               @RequestParam(required = false) Integer pageNumber){
-       if( Optional.ofNullable(pageNumber).isPresent() && Optional.ofNullable(pageSize).isPresent() )
+      /* if( Optional.ofNullable(pageNumber).isPresent() && Optional.ofNullable(pageSize).isPresent() )*/
         return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable,pageSize,pageNumber),HttpStatus.OK);
-          return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable,null,null),HttpStatus.OK);
+  /*        return new ResponseEntity<>(this.walletService.getAllTransactionsWithDate(transactionDate,pageable,null,null),HttpStatus.OK);*/
       }
 
 }
