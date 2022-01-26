@@ -43,5 +43,4 @@ class CustomerControllerTest {
                 () -> assertEquals(customer.getSsid(), actual.getSsid())
         );
     }
-
-    }
+ }

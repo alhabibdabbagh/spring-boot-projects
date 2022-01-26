@@ -1,11 +1,11 @@
 package project7.security7.servics;
 
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project7.security7.dto.CustomerDTO;
 import project7.security7.entity.Customer;
-import project7.security7.exceptions.NotFoundCurrnecyForCustomer;
+
 import project7.security7.exceptions.NotFoundCustomer;
 import project7.security7.exceptions.SameCustomerException;
 import project7.security7.mapper.CustomerMapper;
@@ -23,6 +23,7 @@ import java.util.Optional;
 public class CustomerServis {
 
    /* @Autowired*//* @Repository olduğu için  buna gerek kalmadı */
+
     private final CustomerDAO customerDAO;
     private final CustomerMapper customerMapper;
 
