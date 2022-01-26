@@ -2,12 +2,15 @@ package project7.security7.servics;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project7.security7.dto.CustomerDTO;
 import project7.security7.entity.Customer;
+import project7.security7.exceptions.BadRequestException;
+import project7.security7.exceptions.SameCustomerException;
 import project7.security7.mapper.CustomerMapper;
 import project7.security7.mapper.WalletMapper;
 import project7.security7.repository.CustomerDAO;
@@ -51,5 +54,20 @@ class CustomerServisTest {
                 ()->assertEquals(customer,actual)
 
         );
+    }
+
+    @Test
+    void saveCustomerForException(){
+        Customer customer=new Customer();
+        CustomerDTO customerDTO=new CustomerDTO();
+
+        Mockito.when(customerDAOMock.isExitSsid(anyLong())).thenReturn(Boolean.TRUE);
+
+
+        Executable executable =()->this.customerServis.saveCustomer(customerDTO).get();
+
+        assertThrows(SameCustomerException.class, executable);
+
+
     }
 }
