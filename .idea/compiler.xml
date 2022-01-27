@@ -13,6 +13,7 @@
         <module name="project-3" />
         <module name="project-1" />
         <module name="h2-project" />
+        <module name="project-8" />
       </profile>
       <profile name="Annotation profile for spring-boot-projects" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -34,6 +35,7 @@
       <module name="project-5" target="11" />
       <module name="project-6" target="11" />
       <module name="project-7" target="1.8" />
+      <module name="project-8" target="11" />
       <module name="spring-boot-projects" target="1.5" />
     </bytecodeTargetLevel>
   </component>
@@ -46,6 +48,7 @@
       <module name="project-5" options="-parameters" />
       <module name="project-6" options="-parameters" />
       <module name="project-7" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="project-8" options="-parameters" />
     </option>
   </component>
 </project>
