@@ -1,0 +1,14 @@
+
+P
+java:S1118":Add a private constructor to hide the implicit public one.(ÊˆîÊ
+\
+java:S1126"AReplace this if-then-else statement by a single return statement.(Á³ëóúÿÿÿÿ
+\
+java:S3457"AFormat specifiers should be used instead of string concatenation.(ˆÖÉËùÿÿÿÿ
+o
+java:S1128"TRemove this unused import 'org.apache.logging.log4j.message.StringFormattedMessage'.(öŞä•üÿÿÿÿ
+S
+java:S1128"=Remove this unused import 'javax.swing.text.StyledEditorKit'.(ùÄÀ
+K
+java:S1128"5Remove this unused import 'java.text.ParseException'.(ñ®ï•
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(³ì¦¨úÿÿÿÿ
