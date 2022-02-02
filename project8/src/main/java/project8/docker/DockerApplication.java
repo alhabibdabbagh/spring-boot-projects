@@ -1,5 +1,6 @@
 package project8.docker;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,13 +13,23 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class DockerApplication {
+public class DockerApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(DockerApplication.class, args);
     }
+@Autowired
+EmployeeRepository employeeRepository;
+    @Override
+    public void run(String... args) throws Exception {
+        Employee employee = new Employee("habib11", 25, 25000.0,
+                Arrays.asList(new Course("java11", LocalDate.of(2022, 02, 02)),
+                        new Course("C#1", LocalDate.of(2021, 02, 01)))
+                , Employee.Gender.MALE, 111111L);
+        employeeRepository.insert(employee);
+    }
 
-    @Bean
+ /*   @Bean
     CommandLineRunner commandLineRunner(EmployeeRepository employeeRepository) {
         return args -> {
             Employee employee = new Employee("habib", 25, 25000.0,
@@ -26,7 +37,7 @@ public class DockerApplication {
                             new Course("C#", LocalDate.of(2021, 02, 01)))
                     , Employee.Gender.MALE, 111111L);
             employeeRepository.insert(employee);
-        };
-    }
+        }; //TODO we can write this with CommendLineRunner implemention
+    }*/
 
 }
