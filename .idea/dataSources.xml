@@ -10,7 +10,6 @@
     <data-source source="LOCAL" name="patika-mongodb@localhost" uuid="22a2f4c0-5dc3-48db-b927-ca5f4ec7cac9">
       <driver-ref>mongo</driver-ref>
       <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
       <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
       <jdbc-url>mongodb://localhost:27017/patika-mongodb</jdbc-url>
     </data-source>
