@@ -111,6 +111,8 @@ public class SimpleUnitTestClass {
 
             //when
             int actual = calculator.multiply(first, seconde);
+            System.out.println(first);
+            System.out.println(seconde);
 
             //then
             //Assertions.assertEquals(excepted,actual);

@@ -3,8 +3,6 @@ u
 Eproject-7/src/main/java/project7/security7/servics/WalletService.java,8/6/862fd482f1bac728431cd185a2a1035dd62c5e68
 s
 Cproject-7/src/main/java/project7/security7/util/VaildateWallet.java,6/0/6044eb1426f2aeffc3caa5ce91ed60f2c7dd119d
-s
-Cproject-7/src/main/java/project7/security7/mapper/WalletMapper.java,5/1/516763819c0fe1f607a3cde45da9740f81ddedcc
 {
 Kproject-7/src/main/java/project7/security7/repository/WalletRepository.java,3/1/316b24ae9e94c826b00d00633683f919a9d3482e
 t
